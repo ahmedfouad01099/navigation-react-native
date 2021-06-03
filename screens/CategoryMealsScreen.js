@@ -1,30 +1,57 @@
 import React from "react";
-import { StyleSheet, View, Text, Button } from "react-native";
+import { StyleSheet, View, Text, Button, FlatList } from "react-native";
+import MealItem from "../components/MealItem";
+
+import { CATEGORIES, MEALS } from "../data/dummy-data";
 
 function CategoryMealScreen(props) {
+  const catId = props.route.params.categoryId;
+
+  const selectedCategory = CATEGORIES.find((cat) => cat.id === catId);
+
+  const displayedMeals = MEALS.filter(
+    (meal) => meal.categoryIds.indexOf(catId) >= 0
+  );
+
+  const renderItem = (itemData) => {
+    return (
+      <MealItem
+        title={itemData.item.title}
+        onSelectMeal={() => {
+          props.navigation.navigate({
+            name: "MealDetail",
+            params: {
+              mealId: itemData.item.id,
+            },
+          });
+        }}
+        duration={itemData.item.duration}
+        complexity={itemData.item.complexity}
+        affordability={itemData.item.affordability}
+        imageUrl={itemData.item.imageUrl}
+      />
+    );
+  };
   return (
     <View style={styles.screen}>
-      <Text>The Category Meal Screen!</Text>
-      <View style={styles.button}>
-        <Button
-          title="Go to Details"
-          onPress={() => {
-            props.navigation.navigate("MealDetail");
-          }}
-        />
-      </View>
-      <View style={styles.button}>
-        <Button
-          title="Go Back"
-          onPress={() => {
-            // the altrinative method is pop()
-            props.navigation.goBack();
-          }}
-        />
-      </View>
+      <FlatList
+        style={{ width: "100%" }}
+        data={displayedMeals}
+        renderItem={renderItem}
+      />
     </View>
   );
 }
+
+export const CategoryMealsScreenOptions = (navigationData) => {
+  const catId = navigationData.route.params.categoryId;
+
+  const selectedCategory = CATEGORIES.find((cat) => cat.id === catId);
+
+  return {
+    headerTitle: selectedCategory.title,
+  };
+};
 
 const styles = StyleSheet.create({
   screen: {
