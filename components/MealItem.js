@@ -5,12 +5,18 @@ import {
   View,
   TouchableOpacity,
   ImageBackground,
+  Platform,
+  TouchableNativeFeedback,
 } from "react-native";
 
 function MealItem(props) {
+  let TouchableCmp = TouchableOpacity;
+  if (Platform.OS === "android" && Platform.Version >= 21) {
+    TouchableCmp = TouchableNativeFeedback;
+  }
   return (
     <View style={styles.mealItem}>
-      <TouchableOpacity onPress={props.onSelectMeal}>
+      <TouchableCmp onPress={props.onSelectMeal}>
         <View>
           <View style={{ ...styles.mealRow, ...styles.mealHeader }}>
             <ImageBackground
@@ -30,7 +36,7 @@ function MealItem(props) {
             <Text>{props.affordability}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      </TouchableCmp>
     </View>
   );
 }
@@ -42,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f5f5f5",
     borderRadius: 10,
     overflow: "hidden",
+    marginVertical: 5,
   },
   mealRow: {
     flexDirection: "row",
