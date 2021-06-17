@@ -35,6 +35,7 @@ const defaultNavigationOptions = {
     backgroundColor: Platform.OS === "android" ? Colors.primaryColor : "white",
   },
   headerTintColor: Platform.OS === "android" ? "white" : Colors.primaryColor,
+  headerTintStyle: "open-sans",
 };
 
 const MealsNavigatorScreens = () => {
@@ -123,7 +124,7 @@ const MainNavigator = () => {
         drawerContentOptions={{
           activeTintColor: Colors.accentColor,
           labelStyle: {
-            fontFamily: "open-sans-bold",
+            // fontFamily: "open-sans-bold ",
           },
         }}
       >
