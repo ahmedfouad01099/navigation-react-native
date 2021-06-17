@@ -31,10 +31,14 @@ function MealItem(props) {
             </ImageBackground>
           </View>
           <View style={{ ...styles.mealRow, ...styles.mealDetail }}>
-            <Text>{props.duration}</Text>
-            <Text>{props.complexity.toUpperCase()}</Text>
-            <Text>{props.affordability}</Text>
-          </View>
+            <Text style={{ fontFamily: "open-sans" }}>{props.duration}</Text>
+            <Text style={{ fontFamily: "open-sans" }}>
+              {props.complexity.toUpperCase()}
+            </Text>
+            <Text style={{ fontFamily: "open-sans" }}>
+              {props.affordability}
+            </Text>
+          </View> 
         </View>
       </TouchableCmp>
     </View>
