@@ -5,6 +5,9 @@ import AppLoading from "expo-app-loading";
 import { enableScreens } from "react-native-screens";
 
 import MealsNavigator from "./navigation/MealsNavigator";
+import { createStore, combineReducers } from "redux";
+import { Provider } from "react-redux";
+import mealsReducer from "./sotre/ducks/meals";
 
 enableScreens();
 
@@ -14,6 +17,10 @@ const fetchFonts = () => {
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
 };
+
+const rootReducer = combineReducers({ meals: mealsReducer });
+
+const store = createStore(rootReducer);
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
@@ -28,8 +35,8 @@ export default function App() {
   }
 
   return (
-    <>
+    <Provider store={store}>
       <MealsNavigator />
-    </>
+    </Provider>
   );
 }
